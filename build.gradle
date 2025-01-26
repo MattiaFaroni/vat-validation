@@ -1,0 +1,128 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
+plugins {
+    id 'java'
+    id 'war'
+    id 'org.openapi.generator' version '7.11.0'
+}
+
+group 'com.data.validation'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    log4jVersion = '2.24.3'
+    lombokVersion = '1.18.36'
+    jacksonVersion = '2.18.2'
+    mapStructVersion = '1.6.3'
+    jerseyVersion = '4.0.0-M2'
+    glassfishVersion = '4.0.5'
+    junitVersion = '5.11.0-M2'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    implementation("com.google.code.gson:gson:2.11.0")
+
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}")
+    implementation("com.fasterxml.jackson.module:jackson-module-jaxb-annotations:${jacksonVersion}")
+    implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}")
+
+    implementation("org.apache.logging.log4j:log4j-core:${log4jVersion}")
+    implementation("org.apache.logging.log4j:log4j-api:${log4jVersion}")
+    implementation("org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}")
+
+    implementation("org.mapstruct:mapstruct:${mapStructVersion}")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${mapStructVersion}")
+
+    implementation("org.glassfish.jersey.containers:jersey-container-servlet:${jerseyVersion}")
+    implementation("org.glassfish.jersey.media:jersey-media-json-jackson:${jerseyVersion}")
+    implementation("org.glassfish.jersey.inject:jersey-cdi2-se:${jerseyVersion}")
+
+    implementation("org.glassfish.jaxb:jaxb-runtime:${glassfishVersion}")
+    implementation("org.glassfish.jaxb:jaxb-core:${glassfishVersion}")
+
+    implementation("jakarta.validation:jakarta.validation-api:3.1.0")
+    compileOnly('jakarta.enterprise:jakarta.enterprise.cdi-api:4.1.0')
+    compileOnly('jakarta.servlet:jakarta.servlet-api:6.1.0')
+    compileOnly('jakarta.ws.rs:jakarta.ws.rs-api:4.0.0')
+
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+war {
+    doFirst {
+        def propertyFile = file('build.properties')
+        def props = new Properties()
+        if (propertyFile.exists()) {
+            propertyFile.withReader { props.load(it) }
+        }
+        props.setProperty('projectName', project.name.toString())
+        props.setProperty('releaseDate', new Date().format('yyyy-MM-dd-HH:mm:ss'))
+        props.setProperty('projectVersion', version.toString())
+        propertyFile.withWriter { props.store(it, null) }
+    }
+    webInf {
+        from('\\') {
+            include 'CHANGELOG.md'
+            include 'build.properties'
+        }
+    }
+}
+
+String defaultPackage = "com.data.validation"
+tasks.register('openApiGenerateClasses', GenerateTask) {
+    String outputDirectory = "${layout.buildDirectory.get()}/generated/JaxRS";
+
+    generatorName.set("jaxrs-spec")
+    cleanupOutput.set(true)
+    inputSpec.set("$rootDir/swagger/vat-validation.yaml")
+    templateDir.set("$rootDir/swagger/")
+    outputDir.set(outputDirectory)
+    invokerPackage.set("${defaultPackage}")
+    apiPackage.set("${defaultPackage}.api")
+    apiNameSuffix.set("Interface")
+    modelPackage.set("${defaultPackage}.model.wrapper")
+    configOptions.set([
+
+            additionalModelTypeAnnotations: ";@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY)" +
+                    ";@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)",
+
+            useTags                       : "true",
+            dateLibrary                   : "java8",
+
+            openApiSpecFileLocation       : "openapi.yaml",
+            sourceFolder                  : "src/main/java",
+
+            useJakartaEe                  : "true",
+            useBeanValidation             : "true",
+            hideGenerationTimestamp       : "true",
+            interfaceOnly                 : "true",
+
+            useSwaggerAnnotations         : "false",
+
+            containerDefaultToNull        : "true",
+            openApiNullable               : "false",
+
+            generatePom                   : "false",
+
+            generateConstructorWithAllArgs: "true"
+    ])
+}
+
+test {
+    useJUnitPlatform()
+}

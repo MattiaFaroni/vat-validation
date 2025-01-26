@@ -1,0 +1,107 @@
+openapi: 3.0.3
+info:
+  title: vat-validation
+  version: '1.0.0'
+paths:
+  "/api/vies/check":
+    post:
+      operationId: vatCheck
+      tags:
+        - vatCheck
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/vatCheckRequest"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/vatCheckResponse"
+  "/api/vies/status":
+    get:
+      operationId: viesStatus
+      tags:
+        - viesStatus
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/viesStatusResponse"
+components:
+  schemas:
+    vatCheckRequest:
+      type: object
+      required:
+        - iso2
+        - vatNumber
+      properties:
+        iso2:
+          type: string
+          maxLength: 2
+          minLength: 2
+          description: "Country ISO2"
+        vatNumber:
+          type: string
+          description: "VAT number"
+    vatCheckResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/vatCheckOutputData"
+        system:
+          $ref: "#/components/schemas/system"
+    vatCheckOutputData:
+      type: object
+      properties:
+        iso2:
+          type: string
+          description: "Country iso2"
+        vatNumber:
+          type: string
+          description: "VAT number"
+        valid:
+          type: boolean
+          description: "VAT number validity"
+        name:
+          type: string
+          description: "Candidate name"
+        address:
+          type: string
+          description: "Candidate address"
+    viesStatusResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/isoAvailable"
+        system:
+          $ref: "#/components/schemas/system"
+    isoAvailable:
+      type: object
+      properties:
+        iso2:
+          type: string
+          description: "Country iso2"
+        status:
+          type: string
+          description: "Status"
+    system:
+      type: object
+      properties:
+        code:
+          type: integer
+          enum: [ 0, 1 ]
+          x-enum-varnames:
+            - OK
+            - KO
+          description: "System code"
+        description:
+          type: string
+          enum: [ Ok, Request to VIES failed, Error creating body of VIES service request, Error reading VIES response, Request body not valid ]
+          description: "System description"

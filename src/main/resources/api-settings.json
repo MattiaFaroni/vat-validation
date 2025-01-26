@@ -1,0 +1,4 @@
+{
+  "viesCheckVatNumberUrl": "https://ec.europa.eu/taxation_customs/vies/rest-api/check-vat-number",
+  "viesCheckStatusUrl": "https://ec.europa.eu/taxation_customs/vies/rest-api/check-status"
+}
