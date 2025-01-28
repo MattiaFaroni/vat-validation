@@ -8,6 +8,8 @@ import com.google.gson.JsonObject;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -31,8 +33,23 @@ public class ApplicationListener extends Logger implements ServletContextListene
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        createTomcatRunFile();
+
         printInfo("---------------------------------------------");
         printInfo("-- Start vat-validation API version " + version + " ---");
         printInfo("---------------------------------------------");
+    }
+
+    /**
+     * Method used to create the TomcatRun.info file
+     */
+    private void createTomcatRunFile() {
+        File tomcatRun = new File(System.getProperty("catalina.home") + "/" + "TomcatRun.info");
+        try {
+            tomcatRun.createNewFile();
+        } catch (Exception e) {
+            printError("Error creating tomcat run file: " + e.getMessage());
+            System.exit(99);
+        }
     }
 }
