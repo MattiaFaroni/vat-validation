@@ -1,10 +1,11 @@
 package com.data.validation.listener;
 
 import com.data.validation.config.Configuration;
-import com.data.validation.config.Settings;
+import com.data.validation.config.data.Parameters;
 import com.data.validation.logging.Logger;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import io.sentry.Sentry;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
@@ -18,6 +19,7 @@ import java.util.Properties;
 public class ApplicationListener extends Logger implements ServletContextListener {
 
     private static String version;
+    private static String SENTRY_DSN;
     public static Configuration configuration = new Configuration();
 
     public ApplicationListener() throws IOException {
@@ -28,7 +30,15 @@ public class ApplicationListener extends Logger implements ServletContextListene
 
         Gson gson = new Gson();
         JsonObject jsonObject = Configuration.readJsonData("api-settings.json");
-        configuration.setSettings(gson.fromJson(jsonObject, Settings.class));
+        configuration.setParameters(gson.fromJson(jsonObject, Parameters.class));
+
+        if (configuration.getParameters().getSentry().getDsn() != null && !configuration.getParameters().getSentry().getDsn().isEmpty()) {
+            Sentry.init(options -> {
+                SENTRY_DSN = configuration.getParameters().getSentry().getDsn();
+                options.setDsn(SENTRY_DSN);
+                options.setTracesSampleRate(1.0);
+            });
+        }
     }
 
     @Override

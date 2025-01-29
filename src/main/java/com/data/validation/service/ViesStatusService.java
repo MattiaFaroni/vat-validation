@@ -7,6 +7,7 @@ import com.data.validation.model.vies.StatusInformationResponse;
 import com.data.validation.model.wrapper.ViesStatusResponse;
 import com.data.validation.model.wrapper.System;
 import com.google.gson.Gson;
+import io.sentry.Sentry;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -45,12 +46,13 @@ public class ViesStatusService extends Logger {
     private StatusInformationResponse callViesService() {
         try {
             HttpClient client = HttpClient.newHttpClient();
-            String url = ApplicationListener.configuration.getSettings().getViesCheckStatusUrl();
+            String url = ApplicationListener.configuration.getParameters().getVies().getCheckStatusUrl();
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             return new Gson().fromJson(response.body(), StatusInformationResponse.class);
 
         } catch (Exception e) {
+            Sentry.captureException(e);
             printError("Error while calling the VIES status service", e.getMessage());
             return null;
         }

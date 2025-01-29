@@ -1,5 +1,6 @@
 package com.data.validation.config;
 
+import com.data.validation.config.data.Parameters;
 import com.data.validation.listener.ApplicationListener;
 import com.data.validation.logging.Logger;
 import com.google.gson.JsonObject;
@@ -21,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 @AllArgsConstructor
 public class Configuration extends Logger {
 
-    private Settings settings;
+    private Parameters parameters;
 
     /**
      * Method used to read the configuration json

@@ -17,6 +17,7 @@ import com.data.validation.model.wrapper.VatCheckResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.sentry.Sentry;
 
 public class VatCheckService extends Logger {
 
@@ -56,6 +57,7 @@ public class VatCheckService extends Logger {
         try {
             return objectMapper.writeValueAsString(checkVatRequest);
         } catch (JsonProcessingException e) {
+            Sentry.captureException(e);
             printError("Error creating body of VIES service request", e.getMessage());
             return null;
         }
@@ -68,7 +70,7 @@ public class VatCheckService extends Logger {
      * @return service response
      */
     private VatCheckResponse interactWithViesService(String jsonRequestBody, ObjectMapper objectMapper) {
-        String url = ApplicationListener.configuration.getSettings().getViesCheckVatNumberUrl();
+        String url = ApplicationListener.configuration.getParameters().getVies().getCheckVatNumberUrl();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -100,6 +102,7 @@ public class VatCheckService extends Logger {
             return client.send(request, HttpResponse.BodyHandlers.ofString());
 
         } catch (Exception e) {
+            Sentry.captureException(e);
             printError("Error while calling the VIES service", e.getMessage());
             return null;
         }
@@ -122,6 +125,7 @@ public class VatCheckService extends Logger {
             return composeResponse(vatCheckOutputData, system);
 
         } catch (JsonProcessingException e) {
+            Sentry.captureException(e);
             printError("Error while processing VIES service response", e.getMessage());
             System system = new System();
             system.setCode(System.CodeEnum.KO);

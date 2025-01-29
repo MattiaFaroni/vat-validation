@@ -4,6 +4,7 @@ plugins {
     id 'java'
     id 'war'
     id 'org.openapi.generator' version '7.11.0'
+    id "io.sentry.jvm.gradle" version "5.0.0"
 }
 
 group 'com.data.validation'

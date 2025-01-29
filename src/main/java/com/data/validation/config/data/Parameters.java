@@ -1,4 +1,4 @@
-package com.data.validation.config;
+package com.data.validation.config.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Settings {
+public class Parameters {
 
-    private String viesCheckVatNumberUrl;
-    private String viesCheckStatusUrl;
+    private ViesSettings vies;
+    private SentrySettings sentry;
 
 }
