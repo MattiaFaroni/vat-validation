@@ -3,6 +3,7 @@ package com.data.validation.listener;
 import com.data.validation.config.Configuration;
 import com.data.validation.config.data.Parameters;
 import com.data.validation.logging.Logger;
+import com.data.validation.redis.RedisCacheManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import io.sentry.Sentry;
@@ -21,6 +22,7 @@ public class ApplicationListener extends Logger implements ServletContextListene
     private static String version;
     private static String SENTRY_DSN;
     public static Configuration configuration = new Configuration();
+    public static RedisCacheManager cacheManager;
 
     public ApplicationListener() throws IOException {
         InputStream in = getClass().getClassLoader().getResourceAsStream("../build.properties");
@@ -31,6 +33,8 @@ public class ApplicationListener extends Logger implements ServletContextListene
         Gson gson = new Gson();
         JsonObject jsonObject = Configuration.readJsonData("api-settings.json");
         configuration.setParameters(gson.fromJson(jsonObject, Parameters.class));
+
+        cacheManager = new RedisCacheManager(configuration.getParameters().getRedis().getHost(), configuration.getParameters().getRedis().getPort());
 
         if (configuration.getParameters().getSentry().getDsn() != null && !configuration.getParameters().getSentry().getDsn().isEmpty()) {
             Sentry.init(options -> {
@@ -48,6 +52,11 @@ public class ApplicationListener extends Logger implements ServletContextListene
         printInfo("---------------------------------------------");
         printInfo("-- Start vat-validation API version " + version + " ---");
         printInfo("---------------------------------------------");
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        cacheManager.close();
     }
 
     /**

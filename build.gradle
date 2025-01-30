@@ -60,6 +60,8 @@ dependencies {
 
     implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
 
+    implementation("redis.clients:jedis:5.2.0")
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }

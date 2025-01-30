@@ -5,5 +5,9 @@
   },
   "sentry": {
     "dsn": ""
+  },
+  "redis": {
+    "host": "",
+    "port": 0
   }
 }

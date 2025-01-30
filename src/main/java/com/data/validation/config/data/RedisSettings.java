@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Parameters {
+public class RedisSettings {
 
-    private ViesSettings vies;
-    private SentrySettings sentry;
-    private RedisSettings redis;
+    private String host;
+    private Integer port;
 
 }
