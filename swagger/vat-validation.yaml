@@ -44,7 +44,7 @@ components:
           type: string
           maxLength: 2
           minLength: 2
-          description: "Country ISO2"
+          description: "Country iso2"
         vatNumber:
           type: string
           description: "VAT number"
