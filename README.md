@@ -1,10 +1,10 @@
-<h1 style="text-align: center;">VAT-Validation</h1>
+<h1 align="center">VAT-Validation</h1>
 
-<p style="text-align: center;">
+<p align="center">
 <img width="120" src="./img/vat-validation-logo.png" alt=""/>
 </p>
 
-<p style="text-align: center;">
+<p align="center">
 <img src="https://img.shields.io/badge/Java-ED7B09?style=for-the-badge&logo=openjdk&logoColor=white" alt="">
 <img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white" alt="">
 <img src="https://img.shields.io/badge/Sentry-black?style=for-the-badge&logo=Sentry&logoColor=#362D59" alt="">
@@ -42,11 +42,11 @@ The parameters to configure are listed below:
 }
 ```
 
-This configuration file can be saved inside the application's .war, otherwise inside the config folder of a Tomcat.  
+This configuration file can be saved inside the application's .war, otherwise inside the config folder of a Tomcat.
 The application will first search for the file inside the tomcat and if it does not find it, it reads the one contained in the application.
 
 ## Validation Service
-The validation service allows you to check whether a VAT number is valid or not, and obtain information about it.  
+The validation service allows you to check whether a VAT number is valid or not, and obtain information about it.
 The request requires a body (shown below), where both parameters are mandatory.
 
 ```http request
