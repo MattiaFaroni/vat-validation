@@ -84,6 +84,8 @@ war {
     webInf {
         from('\\') {
             include 'CHANGELOG.md'
+            include 'LICENSE.md'
+            include 'README.md'
             include 'build.properties'
         }
     }
