@@ -13,5 +13,4 @@ public class RedisSettings {
 
     private String host;
     private Integer port;
-
 }

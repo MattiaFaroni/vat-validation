@@ -1,10 +1,5 @@
 package com.data.validation.service;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-
 import com.data.validation.listener.ApplicationListener;
 import com.data.validation.logging.Logger;
 import com.data.validation.mapper.VatCheckMapper;
@@ -18,6 +13,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.sentry.Sentry;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class VatCheckService extends Logger {
 
@@ -26,6 +25,7 @@ public class VatCheckService extends Logger {
      * @param vatCheckRequest service request
      * @return service response
      */
+    // spotless:off
     public VatCheckResponse vatCheck(VatCheckRequest vatCheckRequest) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
@@ -163,4 +163,5 @@ public class VatCheckService extends Logger {
         vatCheckResponse.setSystem(system);
         return vatCheckResponse;
     }
+    // spotless:on
 }

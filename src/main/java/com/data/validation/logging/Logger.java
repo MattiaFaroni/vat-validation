@@ -39,5 +39,4 @@ public class Logger {
     public static void printInfo(String alert) {
         logger.info(alert);
     }
-
 }

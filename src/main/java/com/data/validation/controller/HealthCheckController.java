@@ -9,7 +9,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +20,7 @@ public class HealthCheckController {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    // spotless:off
     public Response healthCheck() throws IOException {
 
         VatCheckResponse vatCheckResponse = callVatCheckService();
@@ -44,4 +44,5 @@ public class HealthCheckController {
         VatCheckService vatCheckService = new VatCheckService();
         return vatCheckService.vatCheck(vatCheckRequest);
     }
+    // spotless:on
 }

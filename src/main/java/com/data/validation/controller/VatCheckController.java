@@ -3,6 +3,7 @@ package com.data.validation.controller;
 import com.data.validation.api.VatCheckInterface;
 import com.data.validation.listener.ApplicationListener;
 import com.data.validation.logging.Logger;
+import com.data.validation.model.wrapper.System;
 import com.data.validation.model.wrapper.VatCheckRequest;
 import com.data.validation.model.wrapper.VatCheckResponse;
 import com.data.validation.redis.RedisCacheManager;
@@ -13,7 +14,6 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import jakarta.ws.rs.Path;
-import com.data.validation.model.wrapper.System;
 import java.util.Set;
 
 @Path("/vies/check")
@@ -24,6 +24,7 @@ public class VatCheckController extends Logger implements VatCheckInterface {
     Validator validator = factory.getValidator();
 
     @Override
+    // spotless:off
     public VatCheckResponse vatCheck(VatCheckRequest vatCheckRequest) {
         if (vatCheckRequest == null) {
             return generateBodyException();
@@ -54,6 +55,7 @@ public class VatCheckController extends Logger implements VatCheckInterface {
             return generateBodyException();
         }
     }
+    // spotless:on
 
     /**
      * Method used to retrieve data from Redis
@@ -93,6 +95,7 @@ public class VatCheckController extends Logger implements VatCheckInterface {
      * @param objectMapper java object serializer/deserializer
      * @param vatCheckResponse service response
      */
+    // spotless:off
     private void saveDataOnRedis(String cacheKey, ObjectMapper objectMapper, VatCheckResponse vatCheckResponse) {
         try {
             cacheManager.putInCache(cacheKey, objectMapper.writeValueAsString(vatCheckResponse));
@@ -100,6 +103,7 @@ public class VatCheckController extends Logger implements VatCheckInterface {
             printError("Error writing value to Redis", e.getMessage());
         }
     }
+    // spotless:on
 
     /**
      * Method used to generate the service response in case of invalid body

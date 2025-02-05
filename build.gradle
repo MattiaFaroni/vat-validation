@@ -5,6 +5,7 @@ plugins {
     id 'war'
     id 'org.openapi.generator' version '7.11.0'
     id "io.sentry.jvm.gradle" version "5.0.0"
+    id "com.diffplug.spotless" version "7.0.2"
 }
 
 group 'com.data.validation'
@@ -133,4 +134,21 @@ tasks.register('openApiGenerateClasses', GenerateTask) {
 
 test {
     useJUnitPlatform()
+}
+
+spotless {
+    java {
+        target("**/*.java")
+        toggleOffOn()
+        palantirJavaFormat()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+
+afterEvaluate {
+    tasks.named("war") {
+        dependsOn("spotlessApply")
+    }
 }

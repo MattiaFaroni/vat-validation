@@ -14,5 +14,4 @@ public class Parameters {
     private ViesSettings vies;
     private SentrySettings sentry;
     private RedisSettings redis;
-
 }

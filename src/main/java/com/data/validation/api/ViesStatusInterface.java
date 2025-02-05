@@ -1,8 +1,8 @@
 package com.data.validation.api;
 
+import com.data.validation.model.wrapper.ViesStatusResponse;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Produces;
-import com.data.validation.model.wrapper.ViesStatusResponse;
 
 public interface ViesStatusInterface {
 

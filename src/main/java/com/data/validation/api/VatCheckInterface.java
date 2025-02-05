@@ -13,5 +13,4 @@ public interface VatCheckInterface {
     @Consumes({"application/json"})
     @Produces({"application/json"})
     VatCheckResponse vatCheck(@Valid VatCheckRequest vatCheckRequest);
-
 }

@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -24,7 +23,6 @@ public class CountryStatus {
 
     @Getter
     public enum AvailabilityEnum {
-
         AVAILABLE("Available"),
         UNAVAILABLE("Unavailable"),
         MONITORING_DISABLED("Monitoring Disabled");

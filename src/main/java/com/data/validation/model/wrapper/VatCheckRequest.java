@@ -16,6 +16,7 @@ public class VatCheckRequest {
     @NotNull
     @Size(min = 2, max = 2)
     private String iso2;
+
     @NotNull
     private String vatNumber;
 }

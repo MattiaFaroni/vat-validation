@@ -3,9 +3,9 @@ package com.data.validation.filter;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
+// spotless:off
 @WebFilter(displayName = "CorsFilter", urlPatterns = {"/*"})
 public class CorsFilter implements Filter {
 
@@ -22,3 +22,4 @@ public class CorsFilter implements Filter {
         chain.doFilter(req, servletResponse);
     }
 }
+// spotless:on

@@ -17,7 +17,9 @@ public interface ViesStatusMapper {
     @Mapping(target = "data", source = "statusInformationResponse.countries")
     ViesStatusResponse viesToWrapper(StatusInformationResponse statusInformationResponse);
 
+    // spotless:off
     @Mapping(target = "iso2", source = "countryStatus.countryCode")
     @Mapping(target = "status", expression = "java(countryStatus.getAvailability() != null ? countryStatus.getAvailability().toString() : null)")
     IsoAvailable viesToWrapper(CountryStatus countryStatus);
+    // spotless:on
 }

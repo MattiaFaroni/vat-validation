@@ -10,7 +10,6 @@ import io.sentry.Sentry;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +23,7 @@ public class ApplicationListener extends Logger implements ServletContextListene
     public static Configuration configuration = new Configuration();
     public static RedisCacheManager cacheManager;
 
+    // spotless:off
     public ApplicationListener() throws IOException {
         InputStream in = getClass().getClassLoader().getResourceAsStream("../build.properties");
         Properties props = new Properties();
@@ -71,4 +71,5 @@ public class ApplicationListener extends Logger implements ServletContextListene
             System.exit(99);
         }
     }
+    // spotless:on
 }

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public enum Match {
-
     VALID("VALID"),
     INVALID("INVALID"),
     NOT_PROCESSED("NOT_PROCESSED");

@@ -1,9 +1,9 @@
+import static org.hamcrest.Matchers.equalTo;
+
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.hamcrest.Matchers.equalTo;
 
 public class VatCheckTest {
 
@@ -17,8 +17,7 @@ public class VatCheckTest {
     public void testValidVatNumber() {
         String requestBody = "{\"iso2\": \"IT\", \"vatNumber\": \"00159560366\" }";
 
-        RestAssured
-                .given()
+        RestAssured.given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .body(requestBody)
@@ -36,8 +35,7 @@ public class VatCheckTest {
     public void testInvalidVatNumber() {
         String requestBody = "{\"iso2\": \"IT\", \"vatNumber\": \"123456789\" }";
 
-        RestAssured
-                .given()
+        RestAssured.given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .body(requestBody)

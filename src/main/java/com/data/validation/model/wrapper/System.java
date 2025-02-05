@@ -23,7 +23,6 @@ public class System {
     @Getter
     @NoArgsConstructor
     public enum CodeEnum {
-
         OK(0),
         KO(1);
 
@@ -56,7 +55,6 @@ public class System {
     @Getter
     @NoArgsConstructor
     public enum DescriptionEnum {
-
         OK("Ok"),
         REQUEST_FAILED("Request to VIES failed"),
         BODY_CREATION_FAILED("Error creating body of VIES service request"),

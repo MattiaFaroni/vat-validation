@@ -9,3 +9,4 @@
 - Lombok 1.18.36
 - MapStruct 1.6.3
 - Jersey 4.0.0-M2
+- Spotless 7.0.2

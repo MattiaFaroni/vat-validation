@@ -12,5 +12,4 @@ import lombok.Setter;
 public class SentrySettings {
 
     private String dsn;
-
 }

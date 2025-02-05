@@ -5,16 +5,15 @@ import com.data.validation.listener.ApplicationListener;
 import com.data.validation.logging.Logger;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -29,6 +28,7 @@ public class Configuration extends Logger {
      * @param fileName json file name
      * @return information extracted from the configuration file
      */
+    // spotless:off
     public static JsonObject readJsonData(String fileName) {
         try {
             InputStream jsonConfig = searchFileOnTomcat(fileName);
@@ -45,6 +45,7 @@ public class Configuration extends Logger {
             return null;
         }
     }
+    // spotless:on
 
     /**
      * Method used to search for configuration file in tomcat

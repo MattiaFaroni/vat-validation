@@ -1,9 +1,9 @@
+import static org.hamcrest.Matchers.*;
+
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.hamcrest.Matchers.*;
 
 public class ViesStatusTest {
 
@@ -15,8 +15,7 @@ public class ViesStatusTest {
 
     @Test
     public void testViesStatus() {
-        RestAssured
-                .given()
+        RestAssured.given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()

@@ -4,11 +4,10 @@ import com.data.validation.listener.ApplicationListener;
 import com.data.validation.logging.Logger;
 import com.data.validation.mapper.ViesStatusMapper;
 import com.data.validation.model.vies.StatusInformationResponse;
-import com.data.validation.model.wrapper.ViesStatusResponse;
 import com.data.validation.model.wrapper.System;
+import com.data.validation.model.wrapper.ViesStatusResponse;
 import com.google.gson.Gson;
 import io.sentry.Sentry;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -43,6 +42,7 @@ public class ViesStatusService extends Logger {
      * Method used to call the VIES service to check the status
      * @return VIES service status information
      */
+    // spotless:off
     private StatusInformationResponse callViesService() {
         try {
             HttpClient client = HttpClient.newHttpClient();
@@ -57,4 +57,5 @@ public class ViesStatusService extends Logger {
             return null;
         }
     }
+    // spotless:on
 }
