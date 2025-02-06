@@ -22,7 +22,7 @@ ext {
     mapStructVersion = '1.6.3'
     jerseyVersion = '4.0.0-M2'
     glassfishVersion = '4.0.5'
-    junitVersion = '5.11.0-M2'
+    junitVersion = '5.11.4'
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -30,7 +30,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 dependencies {
-    implementation("com.google.code.gson:gson:2.11.0")
+    implementation("com.google.code.gson:gson:2.12.1")
 
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
@@ -54,12 +54,12 @@ dependencies {
     implementation("org.glassfish.jaxb:jaxb-runtime:${glassfishVersion}")
     implementation("org.glassfish.jaxb:jaxb-core:${glassfishVersion}")
 
-    implementation("jakarta.validation:jakarta.validation-api:3.1.0")
+    implementation("jakarta.validation:jakarta.validation-api:3.1.1")
     compileOnly('jakarta.enterprise:jakarta.enterprise.cdi-api:4.1.0')
     compileOnly('jakarta.servlet:jakarta.servlet-api:6.1.0')
     compileOnly('jakarta.ws.rs:jakarta.ws.rs-api:4.0.0')
 
-    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.2.Final")
 
     implementation("redis.clients:jedis:5.2.0")
 

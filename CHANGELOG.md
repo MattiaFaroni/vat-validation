@@ -1,6 +1,7 @@
 ## Version 1.0.0
 ### 2025-02-03
 - Initial release
+- Junit 5.11.4
 - Gson 2.11.0
 - Redis 5.2.0
 - Log4j 2.24.3
