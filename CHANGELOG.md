@@ -1,3 +1,12 @@
+## Not Versioned
+### 2025-03-17
+- Gradle 8.13
+- Sentry 5.3.0
+- Openapi 7.12.0
+- Jackson 2.18.3
+- Mockito 5.16.1
+- Rest-assured 5.5.1
+
 ## Version 1.0.0
 ### 2025-02-03
 - Initial release
