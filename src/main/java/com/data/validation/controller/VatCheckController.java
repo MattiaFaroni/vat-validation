@@ -13,7 +13,9 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Response;
 import java.util.Set;
 
 @Path("/vies/check")
@@ -27,7 +29,9 @@ public class VatCheckController extends Logger implements VatCheckInterface {
     // spotless:off
     public VatCheckResponse vatCheck(VatCheckRequest vatCheckRequest) {
         if (vatCheckRequest == null) {
-            return generateBodyException();
+            throw new BadRequestException(Response.status(Response.Status.BAD_REQUEST)
+                    .entity(generateBodyException())
+                    .build());
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -52,7 +56,9 @@ public class VatCheckController extends Logger implements VatCheckInterface {
             return vatCheckResponse;
 
         } else {
-            return generateBodyException();
+            throw new BadRequestException(Response.status(Response.Status.BAD_REQUEST)
+                    .entity(generateBodyException())
+                    .build());
         }
     }
     // spotless:on

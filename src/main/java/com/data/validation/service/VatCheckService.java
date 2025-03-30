@@ -13,6 +13,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.sentry.Sentry;
+import jakarta.ws.rs.InternalServerErrorException;
+import jakarta.ws.rs.ServiceUnavailableException;
+import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -39,7 +42,10 @@ public class VatCheckService extends Logger {
             System system = new System();
             system.setCode(System.CodeEnum.KO);
             system.setDescription(System.DescriptionEnum.BODY_CREATION_FAILED);
-            return composeResponse(system);
+
+            throw new InternalServerErrorException(Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(composeResponse(system))
+                    .build());
         }
     }
 
@@ -87,7 +93,10 @@ public class VatCheckService extends Logger {
             System system = new System();
             system.setCode(System.CodeEnum.KO);
             system.setDescription(System.DescriptionEnum.REQUEST_FAILED);
-            return composeResponse(system);
+
+            throw new ServiceUnavailableException(Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                    .entity(composeResponse(system))
+                    .build());
         }
     }
 
@@ -130,7 +139,10 @@ public class VatCheckService extends Logger {
             System system = new System();
             system.setCode(System.CodeEnum.KO);
             system.setDescription(System.DescriptionEnum.READ_RESPONSE_FAILED);
-            return composeResponse(system);
+
+            throw new InternalServerErrorException(Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(composeResponse(system))
+                    .build());
         }
     }
 
