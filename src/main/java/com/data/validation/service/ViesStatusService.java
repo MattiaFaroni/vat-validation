@@ -8,6 +8,8 @@ import com.data.validation.model.wrapper.System;
 import com.data.validation.model.wrapper.ViesStatusResponse;
 import com.google.gson.Gson;
 import io.sentry.Sentry;
+import jakarta.ws.rs.ServiceUnavailableException;
+import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -29,13 +31,18 @@ public class ViesStatusService extends Logger {
             system.setCode(System.CodeEnum.OK);
             system.setDescription(System.DescriptionEnum.OK);
 
+            viesStatusResponse.setSystem(system);
+            return viesStatusResponse;
+
         } else {
             system.setCode(System.CodeEnum.KO);
             system.setDescription(System.DescriptionEnum.REQUEST_FAILED);
-        }
 
-        viesStatusResponse.setSystem(system);
-        return viesStatusResponse;
+            viesStatusResponse.setSystem(system);
+            throw new ServiceUnavailableException(Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                    .entity(viesStatusResponse)
+                    .build());
+        }
     }
 
     /**
