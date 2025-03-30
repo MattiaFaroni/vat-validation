@@ -47,4 +47,20 @@ public class VatCheckTest {
                 .body("system.code", equalTo(0))
                 .body("system.description", equalTo("Ok"));
     }
+
+    @Test
+    public void testInvalidRequestVatNumber() {
+        String requestBody = "{}";
+
+        RestAssured.given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .body(requestBody)
+                .when()
+                .post("/check")
+                .then()
+                .statusCode(400)
+                .body("system.code", equalTo(1))
+                .body("system.description", equalTo("Request body not valid"));
+    }
 }
