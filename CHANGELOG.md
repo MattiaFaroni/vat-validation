@@ -1,5 +1,6 @@
-## Not Versioned
-### 2025-03-30
+## Version 1.1.0
+### 2025-03-31
+- Redis cache cleaning service
 - Gradle 8.13
 - Sentry 5.3.0
 - Junit 5.12.1
