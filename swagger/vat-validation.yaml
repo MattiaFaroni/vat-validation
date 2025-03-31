@@ -15,7 +15,7 @@ paths:
               $ref: "#/components/schemas/vatCheckRequest"
       responses:
         '200':
-          description: OK
+          description: "Ok"
           content:
             application/json:
               schema:
@@ -27,13 +27,41 @@ paths:
         - viesStatus
       responses:
         '200':
-          description: OK
+          description: "Ok"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/viesStatusResponse"
+  "/api/cache/clear":
+    delete:
+      operationId: clearCache
+      tags:
+        - clearCache
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/clearCacheRequest"
+      responses:
+        '200':
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/clearCacheResponse"
 components:
   schemas:
+    clearCacheRequest:
+      type: object
+      properties:
+        iso2:
+          type: string
+          maxLength: 2
+          minLength: 2
+          description: "Country iso2"
+        vatNumber:
+          type: string
+          description: "VAT number"
     vatCheckRequest:
       type: object
       required:
@@ -73,6 +101,17 @@ components:
         address:
           type: string
           description: "Candidate address"
+    clearCacheResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [ success, error ]
+          description: "Response status"
+        message:
+          type: string
+          enum: [ Cache cleared successfully, Incorrect input parameters ]
+          description: "Description"
     viesStatusResponse:
       type: object
       properties:

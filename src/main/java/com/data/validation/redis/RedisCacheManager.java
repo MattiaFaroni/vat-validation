@@ -46,6 +46,13 @@ public class RedisCacheManager {
     }
 
     /**
+     * Method used to delete all data in Redis (flush all keys)
+     */
+    public void clearAllCache() {
+        jedis.flushAll();
+    }
+
+    /**
      * Method used to close the connection to Redis
      */
     public void close() {
