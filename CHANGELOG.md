@@ -7,6 +7,7 @@
 - Openapi 7.12.0
 - Jackson 2.18.3
 - Mockito 5.16.1
+- Lombok 1.18.38
 - Rest-assured 5.5.1
 
 ## Version 1.0.0
