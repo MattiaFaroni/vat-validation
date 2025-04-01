@@ -117,3 +117,30 @@ GET /api/healthcheck
 ```
 
 If the API works correctly it will return a code 200, otherwise a code 417.
+
+## Redis cache cleaner Service
+The Redis cache cleaner service allows you to delete keys from the cache or clear the cache entirely.  
+This service is useful in case some information has been altered over time, and you want to modify the data saved in the Redis cache.
+
+```http request
+DELETE /api/cache/clear
+```
+
+```body
+{
+    "iso2": "IT",
+    "vatNumber": "00159560366"
+}
+```
+
+If the body is empty, the entire Redis cache is cleared.  
+Below is an example of a successful outcome.
+
+```json
+{
+    "status": "SUCCESS",
+    "message": "Cache cleared successfully"
+}
+```
+
+If the result is unsuccessful, the status will change to "ERROR" and the response will return code 500.
