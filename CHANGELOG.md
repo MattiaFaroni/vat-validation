@@ -1,11 +1,13 @@
-## Not Versioned
-### 2025-03-30
+## Version 1.1.0
+### 2025-03-31
+- Redis cache cleaning service
 - Gradle 8.13
 - Sentry 5.3.0
 - Junit 5.12.1
 - Openapi 7.12.0
 - Jackson 2.18.3
 - Mockito 5.16.1
+- Lombok 1.18.38
 - Rest-assured 5.5.1
 
 ## Version 1.0.0
