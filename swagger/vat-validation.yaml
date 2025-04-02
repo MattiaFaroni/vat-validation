@@ -20,6 +20,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/vatCheckResponse"
+        '400':
+          description: "Invalid input parameters"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/vatCheckResponse"
+        '500':
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/vatCheckResponse"
+        '503':
+          description: "Error calling the VIES service"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/vatCheckResponse"
   "/api/vies/status":
     get:
       operationId: viesStatus
@@ -28,6 +46,12 @@ paths:
       responses:
         '200':
           description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/viesStatusResponse"
+        '503':
+          description: "Error calling the VIES service"
           content:
             application/json:
               schema:
@@ -45,6 +69,18 @@ paths:
       responses:
         '200':
           description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/clearCacheResponse"
+        '500':
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/clearCacheResponse"
+        '400':
+          description: "Invalid input parameters"
           content:
             application/json:
               schema:
