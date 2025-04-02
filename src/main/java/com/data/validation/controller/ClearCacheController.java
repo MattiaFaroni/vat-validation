@@ -35,13 +35,13 @@ public class ClearCacheController extends Logger implements ClearCacheInterface 
                     Sentry.captureException(e);
                     printError("Error while clearing Redis cache", e.getMessage());
                     throw new InternalServerErrorException(Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                            .entity(generateResponseError(ClearCacheResponse.MessageEnum.REDIS_EXCEPTION))
+                            .entity(generateResponseError(e.getMessage()))
                             .build());
                 }
 
             } else {
                 throw new BadRequestException(Response.status(Response.Status.BAD_REQUEST)
-                        .entity(generateResponseError(ClearCacheResponse.MessageEnum.INCORRECT_INPUT_PARAMETERS))
+                        .entity(generateResponseError("Input parameters not valid"))
                         .build());
             }
 
@@ -55,7 +55,7 @@ public class ClearCacheController extends Logger implements ClearCacheInterface 
                 Sentry.captureException(e);
                 printError("Error while clearing Redis cache", e.getMessage());
                 throw new InternalServerErrorException(Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .entity(generateResponseError(ClearCacheResponse.MessageEnum.REDIS_EXCEPTION))
+                        .entity(generateResponseError(e.getMessage()))
                         .build());
             }
         }
@@ -69,7 +69,7 @@ public class ClearCacheController extends Logger implements ClearCacheInterface 
     private ClearCacheResponse generateResponseSuccess() {
         ClearCacheResponse clearCacheResponse = new ClearCacheResponse();
         clearCacheResponse.setStatus(ClearCacheResponse.StatusEnum.SUCCESS);
-        clearCacheResponse.setMessage(ClearCacheResponse.MessageEnum.CACHE_CLEARED_SUCCESSFULLY);
+        clearCacheResponse.setMessage("Cache cleared successfully");
         return clearCacheResponse;
     }
 
@@ -78,7 +78,7 @@ public class ClearCacheController extends Logger implements ClearCacheInterface 
      * @param message error message
      * @return service response
      */
-    private ClearCacheResponse generateResponseError(ClearCacheResponse.MessageEnum message) {
+    private ClearCacheResponse generateResponseError(String message) {
         ClearCacheResponse clearCacheResponse = new ClearCacheResponse();
         clearCacheResponse.setStatus(ClearCacheResponse.StatusEnum.ERROR);
         clearCacheResponse.setMessage(message);
