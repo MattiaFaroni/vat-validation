@@ -15,29 +15,29 @@ paths:
               $ref: "#/components/schemas/vatCheckRequest"
       responses:
         '200':
-          description: "Ok"
+          description: "Request successfully processed. The response contains the result of the VAT number verification."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/vatCheckResponse"
         '400':
-          description: "Invalid input parameters"
+          description: "Invalid input parameters. Ensure that all required data is correctly provided and properly formatted."
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/vatCheckResponse"
+                $ref: "#/components/schemas/system"
         '500':
-          description: "Internal server error"
+          description: "Internal server error. An unexpected issue occurred while processing the request."
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/vatCheckResponse"
+                $ref: "#/components/schemas/system"
         '503':
-          description: "Error calling the VIES service"
+          description: "VIES service temporarily unavailable. The VAT number verification could not be completed at this time."
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/vatCheckResponse"
+                $ref: "#/components/schemas/system"
   "/api/vies/status":
     get:
       operationId: viesStatus
@@ -45,17 +45,17 @@ paths:
         - viesStatus
       responses:
         '200':
-          description: "Ok"
+          description: "Service is operational. The response provides the current status of the VIES service."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/viesStatusResponse"
         '503':
-          description: "Error calling the VIES service"
+          description: "VIES service is currently unavailable. Unable to retrieve service status at this time."
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/viesStatusResponse"
+                $ref: "#/components/schemas/system"
   "/api/cache/clear":
     delete:
       operationId: clearCache
@@ -68,19 +68,19 @@ paths:
               $ref: "#/components/schemas/clearCacheRequest"
       responses:
         '200':
-          description: "Ok"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/clearCacheResponse"
-        '500':
-          description: "Internal server error"
+          description: "Cache successfully cleared."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/clearCacheResponse"
         '400':
-          description: "Invalid input parameters"
+          description: "Invalid input parameters. Verify the request body and ensure it follows the expected format."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/clearCacheResponse"
+        '500':
+          description: "Internal server error. An unexpected issue occurred while attempting to clear the cache."
           content:
             application/json:
               schema:
@@ -92,6 +92,7 @@ components:
       properties:
         keys:
           type: array
+          description: "List of cache keys to be cleared"
           items:
             $ref: "#/components/schemas/key"
     key:
@@ -101,7 +102,7 @@ components:
           type: string
           maxLength: 2
           minLength: 2
-          description: "Country iso2"
+          description: "Country ISO 2"
         vatNumber:
           type: string
           description: "VAT number"
@@ -115,7 +116,7 @@ components:
           type: string
           maxLength: 2
           minLength: 2
-          description: "Country iso2"
+          description: "Country ISO 2"
         vatNumber:
           type: string
           description: "VAT number"
@@ -131,7 +132,7 @@ components:
       properties:
         iso2:
           type: string
-          description: "Country iso2"
+          description: "Country ISO 2"
         vatNumber:
           type: string
           description: "VAT number"
@@ -140,26 +141,27 @@ components:
           description: "VAT number validity"
         name:
           type: string
-          description: "Candidate name"
+          description: "Name of the VAT number holder"
         address:
           type: string
-          description: "Candidate address"
+          description: "Address of the VAT number holder"
     clearCacheResponse:
       type: object
       properties:
         status:
           type: string
           enum: [ success, error ]
-          description: "Response status"
+          description: "Operation status: 'success' if the cache was cleared, 'error' otherwise"
         message:
           type: string
           enum: [ Cache cleared successfully, Incorrect input parameters ]
-          description: "Description"
+          description: "Result description"
     viesStatusResponse:
       type: object
       properties:
         data:
           type: array
+          description: "List of countries with VIES service status"
           items:
             $ref: "#/components/schemas/isoAvailable"
         system:
@@ -169,10 +171,10 @@ components:
       properties:
         iso2:
           type: string
-          description: "Country iso2"
+          description: "Country ISO 2"
         status:
           type: string
-          description: "Status"
+          description: "Current status of the VIES service for the country"
     system:
       type: object
       properties:
@@ -182,7 +184,7 @@ components:
           x-enum-varnames:
             - OK
             - KO
-          description: "System code"
+          description: "System response code: 0 = OK, 1 = Error"
         description:
           type: string
           enum: [ Ok, Request to VIES failed, Error creating body of VIES service request, Error reading VIES response, Request body not valid ]
