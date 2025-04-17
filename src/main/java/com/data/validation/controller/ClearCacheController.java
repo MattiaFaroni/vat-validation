@@ -5,9 +5,10 @@ import com.data.validation.listener.ApplicationListener;
 import com.data.validation.logging.Logger;
 import com.data.validation.model.wrapper.ClearCacheRequest;
 import com.data.validation.model.wrapper.ClearCacheResponse;
+import com.data.validation.model.wrapper.Key;
 import com.data.validation.redis.RedisCacheManager;
 import io.sentry.Sentry;
-import jakarta.ws.rs.BadRequestException;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
@@ -15,33 +16,25 @@ import jakarta.ws.rs.core.Response;
 @Path("/cache/clear")
 public class ClearCacheController extends Logger implements ClearCacheInterface {
 
+    // spotless:off
     RedisCacheManager cacheManager = ApplicationListener.cacheManager;
 
     @Override
-    // spotless:off
     public ClearCacheResponse clearCache(ClearCacheRequest clearCacheRequest) {
 
         if (clearCacheRequest != null) {
-            if (clearCacheRequest.getIso2() != null
-                    && !clearCacheRequest.getIso2().isEmpty()
-                    && clearCacheRequest.getVatNumber() != null
-                    && !clearCacheRequest.getVatNumber().isEmpty()) {
 
-                try {
-                    cacheManager.clearCache(clearCacheRequest.getIso2() + ":" + clearCacheRequest.getVatNumber());
-                    return generateResponseSuccess();
-
-                } catch (Exception e) {
-                    Sentry.captureException(e);
-                    printError("Error while clearing Redis cache", e.getMessage());
-                    throw new InternalServerErrorException(Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                            .entity(generateResponseError(e.getMessage()))
-                            .build());
+            try {
+                for (@Valid Key key : clearCacheRequest.getKeys()) {
+                    cacheManager.clearCache(key.getIso2() + ":" + key.getVatNumber());
                 }
+                return generateResponseSuccess();
 
-            } else {
-                throw new BadRequestException(Response.status(Response.Status.BAD_REQUEST)
-                        .entity(generateResponseError("Input parameters not valid"))
+            } catch (Exception e) {
+                Sentry.captureException(e);
+                printError("Error while clearing Redis cache", e.getMessage());
+                throw new InternalServerErrorException(Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity(generateResponseError(e.getMessage()))
                         .build());
             }
 

@@ -90,6 +90,13 @@ components:
     clearCacheRequest:
       type: object
       properties:
+        keys:
+          type: array
+          items:
+            $ref: "#/components/schemas/key"
+    key:
+      type: object
+      properties:
         iso2:
           type: string
           maxLength: 2
