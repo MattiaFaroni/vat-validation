@@ -56,8 +56,8 @@ public class ClearCacheController extends Logger implements ClearCacheInterface 
     // spotless:on
 
     /**
-     * Method used to generate the response on success
-     * @return service response
+     * Generates a response indicating a successful cache clearing operation.
+     * @return a ClearCacheResponse object with status set to SUCCESS and a success message
      */
     private ClearCacheResponse generateResponseSuccess() {
         ClearCacheResponse clearCacheResponse = new ClearCacheResponse();
@@ -67,9 +67,9 @@ public class ClearCacheController extends Logger implements ClearCacheInterface 
     }
 
     /**
-     * Method used to generate the response in case of error
-     * @param message error message
-     * @return service response
+     * Generates a response indicating an error during the cache clearing process.
+     * @param message the error message describing the issue
+     * @return a ClearCacheResponse object with status set to ERROR and the provided error message
      */
     private ClearCacheResponse generateResponseError(String message) {
         ClearCacheResponse clearCacheResponse = new ClearCacheResponse();

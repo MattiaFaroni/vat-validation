@@ -60,7 +60,7 @@ public class ApplicationListener extends Logger implements ServletContextListene
     }
 
     /**
-     * Method used to create the TomcatRun.info file
+     * Creates a new file named "TomcatRun.info" in the directory specified by the "catalina.home".
      */
     private void createTomcatRunFile() {
         File tomcatRun = new File(System.getProperty("catalina.home") + "/" + "TomcatRun.info");

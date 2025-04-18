@@ -18,8 +18,8 @@ import java.net.http.HttpResponse;
 public class ViesStatusService extends Logger {
 
     /**
-     * Method used to check the status of the VIES service
-     * @return service response
+     * Checks the status of the VIES service by calling an external service and processes the response.
+     * @return object containing the status information of the VIES service.
      */
     public ViesStatusResponse checkStatus() {
         StatusInformationResponse statusInformationResponse = callViesService();
@@ -46,8 +46,8 @@ public class ViesStatusService extends Logger {
     }
 
     /**
-     * Method used to call the VIES service to check the status
-     * @return VIES service status information
+     * Calls the VIES service to check its status and processes the response received.
+     * @return the status information of the VIES service.
      */
     // spotless:off
     private StatusInformationResponse callViesService() {

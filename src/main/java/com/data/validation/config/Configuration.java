@@ -24,9 +24,9 @@ public class Configuration extends Logger {
     private Parameters parameters;
 
     /**
-     * Method used to read the configuration json
-     * @param fileName json file name
-     * @return information extracted from the configuration file
+     * Reads a JSON configuration file and parses its content into a JsonObject.
+     * @param fileName the name of the JSON configuration file to be read
+     * @return a JsonObject representation of the file content
      */
     // spotless:off
     public static JsonObject readJsonData(String fileName) {
@@ -48,9 +48,9 @@ public class Configuration extends Logger {
     // spotless:on
 
     /**
-     * Method used to search for configuration file in tomcat
-     * @param fileName json file name
-     * @return information extracted from the configuration file
+     * Searches for a configuration file within the Tomcat configuration directory and returns an InputStream for the file content.
+     * @param fileName the name of the configuration file to search
+     * @return an InputStream for the file if found
      */
     private static InputStream searchFileOnTomcat(String fileName) {
         try {
@@ -64,9 +64,9 @@ public class Configuration extends Logger {
     }
 
     /**
-     * Method used to search for configuration file in resources
-     * @param fileName json file name
-     * @return information extracted from the configuration file
+     * Searches for a file in the application's resources directory and returns an InputStream to its content.
+     * @param fileName the name of the file to search in the resources directory
+     * @return an InputStream of the file content if found
      */
     private static InputStream searchFileOnResources(String fileName) {
         try {

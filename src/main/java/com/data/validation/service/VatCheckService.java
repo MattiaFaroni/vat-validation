@@ -24,9 +24,9 @@ import java.net.http.HttpResponse;
 public class VatCheckService extends Logger {
 
     /**
-     * Method used to validate a VAT number
-     * @param vatCheckRequest service request
-     * @return service response
+     * Validates a VAT number by interacting with the VIES service.
+     * @param vatCheckRequest the request object containing country code and VAT number
+     * @return a VatCheckResponse object containing the service data and system response
      */
     // spotless:off
     public VatCheckResponse vatCheck(VatCheckRequest vatCheckRequest) {
@@ -50,10 +50,10 @@ public class VatCheckService extends Logger {
     }
 
     /**
-     * Method used to generate the body to query the VIES service
-     * @param vatCheckRequest service request
-     * @param objectMapper java class serializer/deserializer
-     * @return request body
+     * Generates a JSON request body for the VIES service
+     * @param vatCheckRequest the request object containing the country code and VAT number
+     * @param objectMapper the object mapper used for serializing the request into JSON
+     * @return a JSON string representing the request body, or null if an error occurs during serialization
      */
     private String generateRequestBody(VatCheckRequest vatCheckRequest, ObjectMapper objectMapper) {
         CheckVatRequest checkVatRequest = new CheckVatRequest();
@@ -70,10 +70,11 @@ public class VatCheckService extends Logger {
     }
 
     /**
-     * Method used to interact with the VIES service
-     * @param jsonRequestBody VIES service body request
-     * @param objectMapper java class serializer/deserializer
-     * @return service response
+     * Interacts with the VIES service to validate VAT information.
+     * Sends a POST request to the VIES service with the given JSON request body and processes the response.
+     * @param jsonRequestBody the JSON request body to send to the VIES service
+     * @param objectMapper the ObjectMapper used to parse the response from the VIES service
+     * @return a VatCheckResponse object containing the service data and system response
      */
     private VatCheckResponse interactWithViesService(String jsonRequestBody, ObjectMapper objectMapper) {
         String url = ApplicationListener.configuration.getParameters().getVies().getCheckVatNumberUrl();
@@ -101,9 +102,9 @@ public class VatCheckService extends Logger {
     }
 
     /**
-     * Method used to query the VIES service
-     * @param request VIES service request
-     * @return VIES service response
+     * Makes a call to the VIES service using the provided HTTP request.
+     * @param request the HTTP request to be sent to the VIES service
+     * @return the HTTP response as a string, or null if an exception occurs during the request
      */
     private HttpResponse<String> callViesService(HttpRequest request) {
         try {
@@ -119,10 +120,10 @@ public class VatCheckService extends Logger {
     }
 
     /**
-     * Method used to process the VIES service response
-     * @param response VIES service response
-     * @param objectMapper java class serializer/deserializer
-     * @return service response
+     * Processes the response from the VIES service to generate a VAT check response.
+     * @param response the HTTP response received from the VIES service
+     * @param objectMapper the ObjectMapper used to deserialize the response body into a CheckVatResponse object
+     * @return a VatCheckResponse object containing the processed data and system response
      */
     private VatCheckResponse processViesResponse(HttpResponse<String> response, ObjectMapper objectMapper) {
         try {
@@ -147,10 +148,10 @@ public class VatCheckService extends Logger {
     }
 
     /**
-     * Method used to compose the service response
-     * @param vatCheckOutputData service data area
-     * @param system service system area
-     * @return service response
+     * Composes a VatCheckResponse object using the provided VatCheckOutputData and System instances.
+     * @param vatCheckOutputData the output data containing VAT information, including name and address
+     * @param system the system details including status code and description
+     * @return a VatCheckResponse object containing the processed output data and system details
      */
     private VatCheckResponse composeResponse(VatCheckOutputData vatCheckOutputData, System system) {
         if (vatCheckOutputData.getName().equals("---")) {
@@ -166,9 +167,9 @@ public class VatCheckService extends Logger {
     }
 
     /**
-     * Method used to compose the service response
-     * @param system service system area
-     * @return service response
+     * Composes a VatCheckResponse object using the provided System parameter.
+     * @param system the system details including status code and description
+     * @return a VatCheckResponse object containing the system details
      */
     private VatCheckResponse composeResponse(System system) {
         VatCheckResponse vatCheckResponse = new VatCheckResponse();

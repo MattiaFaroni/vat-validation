@@ -64,9 +64,9 @@ public class VatCheckController extends Logger implements VatCheckInterface {
     // spotless:on
 
     /**
-     * Method used to retrieve data from Redis
-     * @param cacheKey Redis key
-     * @return Redis data
+     * Retrieves data from Redis for the given cache key.
+     * @param cacheKey the key used to fetch data from the Redis cache
+     * @return the retrieved data as a String if successful, or null in case of an error
      */
     private String retrieveRedisData(String cacheKey) {
         try {
@@ -78,10 +78,10 @@ public class VatCheckController extends Logger implements VatCheckInterface {
     }
 
     /**
-     * Method used to read data stored on Redis
-     * @param cachedData Redis data
-     * @param objectMapper java object serializer/deserializer
-     * @return service response
+     * Reads and deserializes data from a cached Redis entry.
+     * @param cachedData the serialized data retrieved from the Redis cache
+     * @param objectMapper the object mapper used for deserialization from JSON to a VatCheckResponse object
+     * @return a VatCheckResponse object if deserialization is successful, or null if there is an error or the cached data is null
      */
     private VatCheckResponse readDataOnRedis(String cachedData, ObjectMapper objectMapper) {
         if (cachedData != null) {
@@ -96,10 +96,10 @@ public class VatCheckController extends Logger implements VatCheckInterface {
     }
 
     /**
-     * Method used to save the request inside Redis
-     * @param cacheKey Redis key
-     * @param objectMapper java object serializer/deserializer
-     * @param vatCheckResponse service response
+     * Saves the specified VAT check response data to Redis cache under the provided cache key.
+     * @param cacheKey the key under which the data will be stored in the Redis cache
+     * @param objectMapper the ObjectMapper instance used to serialize the VAT check response into JSON format
+     * @param vatCheckResponse the VAT check response object that needs to be stored in the Redis cache
      */
     // spotless:off
     private void saveDataOnRedis(String cacheKey, ObjectMapper objectMapper, VatCheckResponse vatCheckResponse) {
@@ -112,8 +112,8 @@ public class VatCheckController extends Logger implements VatCheckInterface {
     // spotless:on
 
     /**
-     * Method used to generate the service response in case of invalid body
-     * @return service response
+     * Generates a default error response when the request body is determined to be invalid.
+     * @return a VatCheckResponse object containing system details with the error code set to KO and the description set to BODY_NOT_VALID
      */
     private VatCheckResponse generateBodyException() {
         System system = new System();
